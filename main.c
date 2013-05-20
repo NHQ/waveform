@@ -36,6 +36,9 @@ int main(int argc, char * argv[]) {
     long image_width = 256;
     long image_height = 64;
 
+    long duration = 0;      // In seconds
+    long pixelsPerSecond = 0;    // Number of pixel per second
+
     char * in_file_path = NULL;
     char * out_file_path = NULL;
 
@@ -59,7 +62,7 @@ int main(int argc, char * argv[]) {
             char * arg_name = argv[i] + 2;
 
             // args that take 1 parameter
-            if (i + 1 >= argc)
+            if (i + 1 >= argc)   
                 return printUsage(exe);
             if (strcmp(arg_name, "width") == 0) {
                 image_width = atol(argv[++i]);
@@ -71,6 +74,8 @@ int main(int argc, char * argv[]) {
                 parseColor(argv[++i], color_center);
             } else if (strcmp(arg_name, "color-outer") == 0) {
                 parseColor(argv[++i], color_outer);
+            } else if (strcmp(arg_name, "pixelspersecond") == 0) {
+                pixelsPerSecond = atol(argv[++i]);
             } else {
                 fprintf(stderr, "Unrecognized argument: %s\n", arg_name);
                 return printUsage(exe);
@@ -115,6 +120,12 @@ int main(int argc, char * argv[]) {
         }
         sox_close(input2);
         fprintf(stderr, "Warning: Had to scan for frame count. Found %i frames.\n", frame_count);
+    }
+
+    if(pixelsPerSecond != 0){
+        duration = (long)(input->signal.length / (input->signal.channels * input->signal.rate));
+        //printf("Duration of file: %d\n", duration);
+        image_width = duration * pixelsPerSecond;
     }
 
     long long sample_range = (long long) SOX_SAMPLE_MAX - (long long) SOX_SAMPLE_MIN;
