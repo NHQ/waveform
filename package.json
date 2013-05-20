@@ -1,5 +1,5 @@
 {
-  "name": "waveform",
+  "name": "waveform-autowidth",
   "version": "0.6.0",
   "description": "fast waveform generation",
   "main": "./index",
@@ -9,12 +9,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/superjoe30/waveform.git"
+    "url": "git://github.com/arbiz/waveform.git"
   },
   "keywords": [
     "fast",
     "waveform"
   ],
-  "author": "Andrew Kelley",
+  "author": "Arbi Ben Ali",
   "license": "BSD"
 }
